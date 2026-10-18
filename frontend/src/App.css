@@ -4,24 +4,93 @@
 }
 
 .container {
-  max-width: 900px;
+  width: min(100% - 2rem, 760px);
   margin: 0 auto;
-  padding: 64px 24px;
-  font-family: system-ui, sans-serif;
+  padding: 3rem 0;
 }
 
-.container h1 {
+.app-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.app-header h1 {
   font-size: 2.5rem;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }
 
-.status-card {
-  margin-top: 32px;
-  padding: 24px;
-  border: 1px solid #7b8493;
+.status-card,
+.auth-card {
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #3a4557;
   border-radius: 12px;
+  background: #1b2432;
+  color: #f4f6fa;
 }
 
-.status-card h2 {
-  font-size: 1.2rem;
+.auth-card {
+  max-width: 460px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.auth-card label {
+  font-weight: 600;
+}
+
+.auth-card input {
+  padding: 0.8rem;
+  border: 1px solid #64748b;
+  border-radius: 7px;
+  font: inherit;
+  background: #101826;
+  color: #ffffff;
+}
+
+.auth-card button {
+  margin-top: 0.75rem;
+  padding: 0.85rem;
+  border: 0;
+  border-radius: 7px;
+  background: #597ee8;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-card button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-card .secondary-button {
+  background: #35425a;
+}
+
+.error-message {
+  color: #ffb4b4;
+}
+
+.success-message {
+  color: #9ce6b0;
+}
+
+.dashboard-preview {
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 1px solid #475569;
+  border-radius: 8px;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding-top: 1.5rem;
+  }
 }
