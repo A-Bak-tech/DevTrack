@@ -2,6 +2,10 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from sqlalchemy.engine import URL
 
+from pathlib import Path
+
+
+BACKEND_DIR = Path(__file__).resolve().parent.parent
 
 class Settings(BaseSettings):
     database_host: str = "127.0.0.1"
@@ -22,8 +26,8 @@ class Settings(BaseSettings):
     cookie_secure: bool = False
 
     model_config = SettingsConfigDict(
-        env_file=".env",
-        extra="ignore"
+        env_file=BACKEND_DIR / ".env",
+        extra="ignore",
     )
 
     @property

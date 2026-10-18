@@ -16,6 +16,8 @@ from app.core_config import settings
 from app.db.dependencies import get_db
 from app.models.user import User
 
+from app.security.rate_limit import limiter, LOGIN_RATE_LIMIT
+
 from app.schemas.auth import (
     LoginRequest,
     RegisterRequest,
@@ -85,6 +87,7 @@ def register(
 # USER LOGIN
 # --------------------------------------------------
 
+
 @router.post(
     "/login",
     responses={
@@ -94,8 +97,12 @@ def register(
         403: {
             "description": "Untrusted request origin."
         },
+        429: {
+            "description": "Too many login attempts."
+        },
     },
 )
+@limiter.limit(LOGIN_RATE_LIMIT)
 def login(
     credentials: LoginRequest,
     request: Request,

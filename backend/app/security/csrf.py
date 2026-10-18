@@ -50,16 +50,30 @@ def verify_csrf_token(
     )
 
 
+
 def validate_request_origin(request: Request) -> None:
-    """Reject requests from explicitly untrusted origins."""
+    """Reject untrusted Origin and cross-site browser requests."""
 
     origin = request.headers.get("origin")
 
-    if origin is not None and origin not in settings.allowed_origins:
+    # Reject an explicitly untrusted Origin.
+    if origin is not None:
+        if origin not in settings.allowed_origins:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Untrusted request origin.",
+            )
+
+    # Fetch Metadata gives additional protection against
+    # requests initiated from unrelated websites.
+    fetch_site = request.headers.get("sec-fetch-site")
+
+    if fetch_site == "cross-site":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Untrusted request origin.",
+            detail="Cross-site requests are not allowed.",
         )
+
 
 
 def require_csrf(request: Request) -> None:
